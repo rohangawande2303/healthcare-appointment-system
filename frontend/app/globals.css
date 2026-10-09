@@ -1,0 +1,212 @@
+@import "tailwindcss";
+
+/* ============================================================
+   HEALTHEASE — DESIGN SYSTEM TOKENS (Tailwind CSS v4)
+   Inspired by Thalamus GME visual language
+   ============================================================ */
+
+@theme {
+  /* ── Fonts ─────────────────────────────────────────── */
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+
+  /* ── Brand Colors (Teal/Blue) ───────────────────────── */
+  --color-primary-50:  #F0FAFB;
+  --color-primary-100: #EAF9F9;
+  --color-primary-200: #CDEFF0;
+  --color-primary-300: #9DE1E1;
+  --color-primary-400: #5BC6CD;
+  --color-primary-500: #27A7B5;
+  --color-primary-600: #16869A;
+  --color-primary-700: #176B83;
+  --color-primary-800: #174E66;
+  --color-primary-900: #123C52;
+
+  /* ── Lavender Accent ────────────────────────────────── */
+  --color-lavender-100: #F1EFFF;
+  --color-lavender-300: #C4BFF2;
+  --color-lavender-500: #8176D9;
+
+  /* ── Ink (Text) Colors ──────────────────────────────── */
+  --color-ink-primary:   #10232D;
+  --color-ink-heading:   #17313C;
+  --color-ink-secondary: #405762;
+  --color-ink-muted:     #61727A;
+  --color-ink-placeholder: #9BA9AE;
+
+  /* ── Surface Colors ─────────────────────────────────── */
+  --color-surface:       #F5F9FA;
+  --color-surface-tint:  #EEF7F8;
+  --color-surface-tint2: #EAF9F9;
+
+  /* ── Status Colors ──────────────────────────────────── */
+  --color-success:     #15966A;
+  --color-success-bg:  #EAF8F2;
+  --color-warning:     #D99024;
+  --color-warning-bg:  #FFF6E6;
+  --color-error:       #D95757;
+  --color-error-bg:    #FDEEEE;
+  --color-info:        #3677C8;
+  --color-info-bg:     #EDF5FF;
+
+  /* ── Border Radius ──────────────────────────────────── */
+  --radius-sm:     12px;
+  --radius-md:     14px;
+  --radius-input:  14px;
+  --radius-btn:    14px;
+  --radius-card:   24px;
+  --radius-card-lg: 28px;
+  --radius-panel:  32px;
+
+  /* ── Shadows ────────────────────────────────────────── */
+  --shadow-sm:    0 4px 16px rgba(16,50,60,0.05);
+  --shadow-card:  0 12px 35px rgba(16,50,60,0.07);
+  --shadow-float: 0 20px 60px rgba(16,50,60,0.10);
+  --shadow-glass: 0 20px 50px rgba(20,70,80,0.08);
+  --shadow-btn:   0 10px 30px rgba(23,107,131,0.18);
+
+  /* ── Transition Durations ───────────────────────────── */
+  --duration-fast: 200ms;
+  --duration-base: 300ms;
+}
+
+/* ============================================================
+   GLOBAL BASE STYLES
+   ============================================================ */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background:
+    radial-gradient(circle at 10% 10%, rgba(39, 167, 181, 0.10), transparent 30%),
+    radial-gradient(circle at 90% 20%, rgba(129, 118, 217, 0.08), transparent 28%),
+    #F5F9FA;
+  background-attachment: fixed;
+  color: #10232D;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+}
+
+/* ============================================================
+   GLASS PANEL UTILITY
+   ============================================================ */
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.70);
+  box-shadow: 0 20px 50px rgba(20, 70, 80, 0.08);
+}
+
+.glass-panel-strong {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  box-shadow: 0 20px 60px rgba(20, 70, 80, 0.10);
+}
+
+/* ============================================================
+   TYPOGRAPHY UTILITIES
+   ============================================================ */
+
+.text-hero {
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+
+.text-h1 {
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.text-h2 {
+  font-size: clamp(24px, 3.5vw, 42px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.text-h3 {
+  font-size: clamp(20px, 2.5vw, 28px);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.text-card-heading {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.text-body {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.text-small {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.text-meta {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+}
+
+/* ============================================================
+   DECORATIVE BLOB UTILITIES
+   ============================================================ */
+
+.blob-teal {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(39, 167, 181, 0.18);
+  filter: blur(100px);
+  pointer-events: none;
+}
+
+.blob-lavender {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(129, 118, 217, 0.12);
+  filter: blur(120px);
+  pointer-events: none;
+}
+
+/* ============================================================
+   SCROLLBAR HIDE
+   ============================================================ */
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ============================================================
+   REDUCED MOTION SUPPORT
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
