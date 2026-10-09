@@ -29,11 +29,23 @@ This guide walks you through deploying the complete HealthEase system **100% fre
      postgresql://neondb_owner:npg_xxxxxx@ep-cool-snowflake-a5xxxxx-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require
      ```
    - **Save this connection string** — you will use it as `DATABASE_URL` in Step 2.
-4. **Seed the database with schema and 120+ doctors**:
+4. **Seed the database with schema, demo accounts, and 125 specialists**:
    - In your Neon project sidebar, click on **SQL Editor**.
-   - Open [database/schema.sql](database/schema.sql) on your computer, copy all text, paste it into Neon SQL Editor, and click **Run**.
-   - Next, open [database/seeds/doctors_data.sql](database/seeds/doctors_data.sql), copy all text, paste it into Neon SQL Editor, and click **Run**.
-   - Verify by running: `SELECT COUNT(*) FROM doctors;` (Should return `129`).
+   - **Step 4a (Tables):** Open [database/schema.sql](database/schema.sql), copy all text, paste it into Neon SQL Editor, and click **Run**.
+   - **Step 4b (Demo Accounts):** Open [database/seeds/demo_accounts.sql](database/seeds/demo_accounts.sql), copy all text, paste it into Neon SQL Editor, and click **Run**. (Creates Admin, Patient John, Patient Sarah, and Doctor Sharma with verified `Password123!`).
+   - **Step 4c (Doctors Catalog):** Open [database/seeds/doctors_data.sql](database/seeds/doctors_data.sql), copy all text, paste it into Neon SQL Editor, and click **Run**. (Seeds 125 doctors across 10 major cities with OpenStreetMap clinic locations).
+   - **Step 4d (Verify in Neon):** Run the following verification query:
+     ```sql
+     SELECT role, COUNT(*) FROM users GROUP BY role;
+     -- Expected Result:
+     -- admin: 1 | patient: 2 | doctor: 125 (Total users = 128)
+
+     SELECT COUNT(*) FROM doctors;
+     -- Expected Result: 125
+
+     SELECT COUNT(*) FROM patients;
+     -- Expected Result: 2
+     ```
 
 ---
 
