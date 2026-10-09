@@ -1,0 +1,71 @@
+PHASE 1 DOCUMENTATION: Foundation & Authentication
+
+Overview
+In this phase, we have built the core foundation of the HealthEase application. This includes the project structure, the database schema, a robust authentication system, and the initial user interfaces for patients, doctors, and admins.
+
+What Was Built
+- Project Structure: Organized folders for frontend (Next.js), backend (Express), and database.
+- Database Schema: PostgreSQL tables with relationships, constraints, and indexes.
+- Authentication: Secure registration and login flows using JWT and NextAuth.js.
+- Modern UI: Animated landing page, multi-step registration, and glassmorphism login.
+- Dashboard Shells: Responsive layouts for different user roles with sidebar navigation.
+
+How Authentication Works
+Think of authentication like a membership club.
+1. Registration: When you join, we take your details and securely lock your password using "bcrypt" (a powerful scrambling machine) so even we can't read it.
+2. Login: When you log back in, our Node.js backend checks your credentials. If they are correct, it gives you a "JWT Token" – which is like a digital ID card.
+3. Sessions: Our Next.js frontend uses "NextAuth.js" to hold onto this ID card. Every time you visit a new page, your browser shows this card so we know who you are without asking for your password again.
+
+Database Structure
+We used PostgreSQL to store data in tables:
+- Users: The main list of everyone (email, name, role).
+- Doctors & Patients: Specific details for each role, linked back to the Users table.
+- Appointments: The link between patients and doctors (date, time, status).
+- We added "Constraints" to ensure data is clean (e.g., unique emails) and "Indexes" to make searching fast.
+
+Frontend Pages Created
+- Landing Page (/): A beautiful introduction with animations.
+- Login Page (/login): A modern, secure entry point.
+- Register Page (/register): A simple multi-step form to help you join.
+- Dashboard (/dashboard): A personalized homepage showing your stats.
+
+Backend APIs Created
+- POST /api/auth/register: Creates your account.
+- POST /api/auth/login: Verifies you and gives you an ID card (token).
+- GET /api/auth/me: Retrieves your profile details safely.
+
+How Components Are Connected
+1. The Frontend (Next.js) talks to the Backend (Express) using "Axios" (a messenger service).
+2. The Backend talks to the Database (PostgreSQL) to save or find your information.
+3. All these parts work together smoothly to give you a fast and reliable experience.
+
+Design Decisions
+- Glassmorphism: We used blurry, transparent cards for the login to give it a "premium" feel.
+- Framer Motion: We added smooth transitions between steps in the registration form so it doesn't feel like a boring form.
+- Mobile First: The dashboard was designed to work perfectly on your phone first, then expanded for computers.
+
+Testing Done
+- Verified that you cannot login with the wrong password.
+- Confirmed that a patient cannot see the admin dashboard.
+- Tested the website on mobile, tablet, and desktop screens.
+- Checked the database to ensure passwords are encrypted and not plain text.
+
+Challenges Faced
+- Connecting NextAuth with a separate Express backend was tricky, but we solved it by using a custom "Credentials Provider".
+- Making sure the multi-step form didn't lose data when going back was solved by using React state management.
+
+How to Demo This Phase
+1. Show the Landing Page: Scroll down to show animations and responsiveness.
+2. Register a New User:
+   - Click "Get Started".
+   - Fill in Step 1 (Name, Email, etc.).
+   - Select "Doctor" or "Patient".
+   - Fill in Step 2 (Role-specific details).
+   - Show the "Success" screen.
+3. Login:
+   - Go to the Login page.
+   - Enter your new credentials.
+   - Show how you are redirected to the Dashboard.
+4. Explore Dashboard:
+   - Show the sidebar and how it changes based on who is logged in.
+   - Click "Sign Out" to return to the home page.

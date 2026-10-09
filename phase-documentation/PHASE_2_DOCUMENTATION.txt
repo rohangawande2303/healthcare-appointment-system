@@ -1,0 +1,91 @@
+PHASE 2 DOCUMENTATION - Healthcare Appointment System
+===================================================
+
+1. APPOINTMENT BOOKING FLOW
+---------------------------
+Step-by-step process for a patient to book an appointment:
+1. Search/Browse: Patient views doctor cards in the listing page.
+2. Select Specialist: Patient clicks "Book Now" to view the doctor's profile.
+3. Choose Date: Patient uses the interactive calendar to select a date (up to 14 days ahead).
+4. Select Slot: The system fetches available slots for that date (excluding already booked ones).
+5. Select Type: Patient chooses between 'In-Person' or 'Video Call'.
+6. Confirm: Patient reviews details and adds optional notes.
+7. Success: Transactional booking is created, and a confirmation email is sent.
+
+2. DOCTOR AVAILABILITY SYSTEM
+-----------------------------
+- Doctors set their base weekly schedule (e.g., Mon 9-11, Tue 10-12) stored as JSONB.
+- The Availability API dynamically calculates slots for a specific date.
+- Logic: Base Slots - Booked Appointments = Available Slots.
+- Standard slot duration is 30 minutes.
+
+3. DATABASE RELATIONSHIPS
+-------------------------
+- Appointments: Links 'patients' (id) and 'doctors' (id).
+- Users: Provides basic info (name, email) for both roles via JOINs.
+- UNIQUE Constraint: A composite index on (doctor_id, appointment_date, time_slot) prevents double-booking at the database level.
+
+4. EMAIL NOTIFICATION SYSTEM
+----------------------------
+- Technology: Nodemailer with node-cron scheduler.
+- Events:
+  - Booking Confirmation: Sent immediately upon successful POST /api/appointments.
+  - 24-Hour Reminder: A background job runs every hour to find appointments exactly 24 hours away and sends reminders.
+
+5. FRONTEND COMPONENTS
+----------------------
+- DoctorListing: Paginated grid with search and specialty filters.
+- AvailabilityCalendar: Date picker and dynamic slot fetcher.
+- BookingFlow: Multi-step state machine with success animations (confetti).
+- PatientDashboard: List with countdown timers and "Cancel/Reschedule" actions.
+- DoctorDashboard: Daily schedule view with status management (Confirm/Complete).
+- AdminDashboard: Global searchable table with status statistics.
+
+6. API ENDPOINTS (PHASE 2)
+--------------------------
+- GET /api/doctors : Paginated list with filters.
+- GET /api/doctors/:id/availability : Dynamic slot calculation.
+- POST /api/appointments : Create booking.
+- GET /api/appointments/patient/:id : Dashboard data for patients.
+- GET /api/appointments/doctor/:id : Dashboard data for doctors.
+- PUT /api/appointments/:id/status : Update status (Confirmed/Completed).
+- DELETE /api/appointments/:id : Cancel appointment.
+
+7. STATE MANAGEMENT
+-------------------
+- React State (useState): Used for local component data (filters, selected slots).
+- NextAuth Session: Used to identify user role and ID for API calls.
+- API Interceptors: Automatically attach JWT token to all requests.
+
+8. TESTING RESULTS
+------------------
+- Double-booking prevented by DB constraint.
+- Email confirmation successfully triggered.
+- Pagination verified for doctor listing.
+- Timezone consistency: UTC stored in DB, converted to local on client.
+
+9. ERROR HANDLING & EDGE CASES
+-------------------------------
+- Double-Booking: Handled by a UNIQUE DB constraint on (doctor_id, date, slot). Returns a 400 error if a race condition occurs.
+- Same-Day Booking: Past time slots for the current day are automatically filtered out with a 30-minute safety buffer.
+- Status Transitions: Strict validation prevents invalid state changes (e.g., from 'completed' back to 'confirmed').
+- Timezones: All data stored in UTC to avoid server-client mismatch.
+
+10. ADMIN DASHBOARD CAPABILITIES
+--------------------------------
+- Statistical Overview: Real-time counts of Total, Completed, Pending, and Cancelled appointments.
+- Advanced Filtering: Filter global lists by status (Confirmed, Pending, etc.).
+- Instant Search: Search by Doctor or Patient name with debounced inputs.
+- Global Oversight: Ability to view full appointment details including specialty and consultation type.
+
+11. DEMO GUIDE FOR TEACHER
+-------------------------
+1. Login as 'patient.john@gmail.com'.
+2. Go to 'Find Doctors', search for 'Sharma' or filter by 'Cardiology'.
+3. Click a doctor, go to 'Book Appointment' tab.
+4. Select a date and a time slot.
+5. Finish booking and watch the confetti success animation.
+6. Check 'My Appointments' to see the countdown and status.
+7. Login as 'doctor.sharma@healthcare.com'.
+8. View the 'Daily Schedule' to see John's appointment and 'Confirm' it.
+===================================================

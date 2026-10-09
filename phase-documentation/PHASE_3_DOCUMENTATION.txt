@@ -1,0 +1,54 @@
+PHASE 3 DOCUMENTATION - Healthcare Appointment System
+===================================================
+
+1. RAZORPAY INTEGRATION
+-----------------------
+How the payment system works:
+1. When you click "Pay & Confirm", the app talks to our backend to create a "Payment Order" with Razorpay.
+2. A secure Razorpay window pops up where you can pay using Cards, UPI, or NetBanking (we use Test Mode, so no real money is involved).
+3. Once the payment is successful, Razorpay gives a "Secret Signature".
+4. Our backend verifies this signature to make sure the payment was genuine and not faked.
+5. Once verified, your appointment status is updated to 'Confirmed' automatically.
+
+2. PAYMENT SECURITY
+-------------------
+- We never store your card details on our server.
+- All payments are handled directly by Razorpay's secure servers.
+- We use HMAC SHA256 encryption to verify every transaction, ensuring that no one can trick the system into thinking they paid without actually doing so.
+
+3. WEBRTC VIDEO SYSTEM
+----------------------
+How video calling works (in simple terms):
+- WebRTC is a technology that allows two browsers to talk directly to each other (Peer-to-Peer).
+- Imagine two people wanting to talk. They first need to find each other's "address".
+- Our backend acts as a "Signaling Server" using Socket.io to help the Doctor and Patient exchange their "digital addresses".
+- Once they have each other's info, the video and audio travel directly between them for the fastest possible connection.
+
+4. VIDEO CALL FLOW
+------------------
+1. Doctor clicks "Start Call" from their dashboard.
+2. Patient sees a "Join Video Consultation" button on their dashboard.
+3. Both join a private "Consultation Room".
+4. They can see/hear each other, mute their mic, or turn off their camera.
+5. When the call ends, both are safely returned to their dashboards.
+
+5. DATABASE UPDATES
+-------------------
+- New 'payments' table stores transaction IDs and amounts.
+- 'appointments' table now tracks 'payment_status' (pending/paid).
+
+6. TESTING RESULTS
+------------------
+- Razorpay Test Mode: Successfully processed payments using test card numbers.
+- Video Quality: Low latency communication verified on local network.
+- Signaling: Socket.io successfully handles user join/leave events.
+
+7. DEMO GUIDE FOR TEACHER
+-------------------------
+1. Login as Patient and go to book an appointment.
+2. In the final step, click "Pay & Confirm".
+3. Use Razorpay Test Card (4111 1111 1111 1111) to complete payment.
+4. Go to 'My Appointments' and see the status as 'Confirmed'.
+5. If it's a Video appointment, click "Join Video Consultation".
+6. In another window, login as Doctor and click "Start Call" to begin the consultation.
+===================================================
